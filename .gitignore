@@ -1,0 +1,61 @@
+# =========================
+# Java
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+
+# =========================
+# Build directories
+# =========================
+bin/
+build/
+out/
+target/
+
+# =========================
+# IDE Files
+# =========================
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/private/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# =========================
+# Application Data
+# (Uncomment if your project
+# generates runtime data files)
+# =========================
+# library_data.ser
+# backup.ser
+# *.csv
