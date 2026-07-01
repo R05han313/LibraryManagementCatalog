@@ -1,17 +1,16 @@
 package ui.dialogs;
 
 import data.LibraryData;
-import models.Book;
-import ui.Theme;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.Year;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import models.Book;
+import ui.Theme;
 
-/**
- * Dialog for adding a new book or editing an existing one.
- * Performs thorough input validation before allowing submission.
- */
+//Dialog for adding a new book or editing an existing one.
+//Performs thorough input validation before allowing submission.
+
 public class BookDialog extends JDialog {
     private final JTextField titleField = Theme.textField();
     private final JTextField authorField = Theme.textField();
@@ -132,6 +131,7 @@ public class BookDialog extends JDialog {
         return c;
     }
 
+    @SuppressWarnings("StringConcatenationInsideStringBufferAppend")
     private void attemptSave() {
         String title = titleField.getText().trim();
         String author = authorField.getText().trim();

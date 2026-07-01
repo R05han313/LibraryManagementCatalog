@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
-/**
- * Represents a library member who can borrow books.
- */
+//Represents a library member who can borrow books.
+ 
 public class Member implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -19,6 +18,7 @@ public class Member implements Serializable {
     private String email;
     private String phone;
     private MembershipType type;
+    @SuppressWarnings("FieldMayBeFinal")
     private LocalDate joinDate;
     private double outstandingFine;
     private boolean active;

@@ -1,13 +1,13 @@
 package utils;
 
 import data.LibraryData;
-import models.Book;
-import javax.swing.*;
 import java.awt.Component;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.List;
+import javax.swing.*;
+import models.Book;
 
 /**
  * Utility for exporting the book catalog to CSV and importing books from CSV.
@@ -71,7 +71,7 @@ public class CsvUtil {
                     String[] fields = parseCsvLine(line);
                     if (fields.length < 4) {
                         skipped++;
-                        errorDetails.append("Line " + (i + 1) + ": too few fields.\n");
+                        errorDetails.append("Line ").append(i + 1).append(": too few fields.\n");
                         continue;
                     }
                     String title = fields.length > 0 ? fields[0] : "";
@@ -87,12 +87,12 @@ public class CsvUtil {
 
                     if (title.isEmpty() || isbn.isEmpty()) {
                         skipped++;
-                        errorDetails.append("Line " + (i + 1) + ": missing title or ISBN.\n");
+                        errorDetails.append("Line ").append(i + 1).append(": missing title or ISBN.\n");
                         continue;
                     }
                     if (data.isDuplicateIsbn(isbn, "")) {
                         skipped++;
-                        errorDetails.append("Line " + (i + 1) + ": duplicate ISBN " + isbn + ".\n");
+                        errorDetails.append("Line ").append(i + 1).append(": duplicate ISBN ").append(isbn).append(".\n");
                         continue;
                     }
 
@@ -102,7 +102,7 @@ public class CsvUtil {
                     imported++;
                 } catch (Exception rowEx) {
                     skipped++;
-                    errorDetails.append("Line " + (i + 1) + ": " + rowEx.getMessage() + "\n");
+                    errorDetails.append("Line ").append(i + 1).append(": ").append(rowEx.getMessage()).append("\n");
                 }
             }
 
@@ -119,6 +119,7 @@ public class CsvUtil {
         }
     }
 
+    @SuppressWarnings("UseSpecificCatch")
     private static int safeParseInt(String s, int fallback) {
         try {
             return Integer.parseInt(s.trim());
@@ -127,6 +128,7 @@ public class CsvUtil {
         }
     }
 
+    @SuppressWarnings("UseSpecificCatch")
     private static double safeParseDouble(String s, double fallback) {
         try {
             return Double.parseDouble(s.trim());
@@ -148,6 +150,7 @@ public class CsvUtil {
      * Minimal but correct CSV line parser handling quoted fields with embedded
      * commas.
      */
+    @SuppressWarnings("CollectionsToArray")
     private static String[] parseCsvLine(String line) {
         java.util.List<String> fields = new java.util.ArrayList<>();
         StringBuilder current = new StringBuilder();
@@ -166,13 +169,13 @@ public class CsvUtil {
                     current.append(c);
                 }
             } else {
-                if (c == '"') {
-                    inQuotes = true;
-                } else if (c == ',') {
-                    fields.add(current.toString());
-                    current.setLength(0);
-                } else {
-                    current.append(c);
+                switch (c) {
+                    case '"' -> inQuotes = true;
+                    case ',' -> {
+                        fields.add(current.toString());
+                        current.setLength(0);
+                    }
+                    default -> current.append(c);
                 }
             }
         }

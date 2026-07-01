@@ -1,19 +1,23 @@
 package ui.panels;
 
 import data.LibraryData;
-import models.Loan;
-import ui.Theme;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import models.Loan;
+import ui.Theme;
 
 public class DashboardPanel extends JPanel {
     private final LibraryData data;
+    @SuppressWarnings("FieldMayBeFinal")
     private JPanel statsRow;
+    @SuppressWarnings("FieldMayBeFinal")
     private JPanel activityPanel;
+    @SuppressWarnings("FieldMayBeFinal")
     private JPanel overduePanel;
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public DashboardPanel(LibraryData data) {
         this.data = data;
         setLayout(new BorderLayout(0, 20));

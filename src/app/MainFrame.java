@@ -153,9 +153,8 @@ public class MainFrame extends JFrame {
             statisticsPanel.refresh();
     }
 
-    /**
-     * Called by sub-panels after any data mutation to keep all views consistent.
-     */
+    //Called by sub-panels after any data mutation to keep all views consistent.
+    
     public void refreshAll() {
         catalogPanel.refresh();
         membersPanel.refresh();

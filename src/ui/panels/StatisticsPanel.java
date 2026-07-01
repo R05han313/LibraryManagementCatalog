@@ -1,16 +1,17 @@
 package ui.panels;
 
 import data.LibraryData;
-import models.Book;
-import ui.Theme;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import models.Book;
+import ui.Theme;
 
 public class StatisticsPanel extends JPanel {
     private final LibraryData data;
+    @SuppressWarnings("FieldMayBeFinal")
     private JPanel contentArea;
 
     public StatisticsPanel(LibraryData data) {
@@ -34,7 +35,7 @@ public class StatisticsPanel extends JPanel {
         refresh();
     }
 
-    public void refresh() {
+    public final void refresh() {
         contentArea.removeAll();
 
         // Summary cards

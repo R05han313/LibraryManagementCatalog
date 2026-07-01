@@ -5,9 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
-/**
- * Represents a single borrowing transaction linking a Book copy to a Member.
- */
+// Represents a single borrowing transaction linking a Book copy to a Member.
 public class Loan implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -100,9 +98,8 @@ public class Loan implements Serializable {
         return Math.max(0, days);
     }
 
-    /**
-     * Extends the due date by the given number of days. Only allowed for active,
-     * non-overdue loans, max 2 renewals.
+    /* Extends the due date by the given number of days. Only allowed for active,
+       non-overdue loans, max 2 renewals.
      */
     public RenewResult renew(int days, int maxRenewals) {
         if (isReturned())

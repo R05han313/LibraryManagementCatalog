@@ -1,17 +1,16 @@
 package data;
 
-import models.Book;
-import models.Loan;
-import models.Member;
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import models.Book;
+import models.Loan;
+import models.Member;
 
-/**
- * Central in-memory data store for the library, with binary serialization
- * persistence to disk so data survives between application runs.
+/* Central in-memory data store for the library, with binary serialization
+   persistence to disk so data survives between application runs.
  */
 public class LibraryData implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,7 +22,7 @@ public class LibraryData implements Serializable {
     private List<Loan> loans = new ArrayList<>();
     private List<String> activityLog = new ArrayList<>();
 
-    // ---------------- Persistence ----------------
+    //Persistence
 
     public static LibraryData loadOrCreate() {
         File file = new File(DATA_FILE);
@@ -62,10 +61,8 @@ public class LibraryData implements Serializable {
             activityLog = new ArrayList<>();
     }
 
-    /**
-     * Saves to disk atomically: writes a temp file, backs up the old file, then
-     * swaps.
-     */
+    //Saves to disk atomically: writes a temp file, backs up the old file, then swaps.
+
     public synchronized void save() {
         try {
             File current = new File(DATA_FILE);
@@ -86,8 +83,7 @@ public class LibraryData implements Serializable {
         }
     }
 
-    // ---------------- Sample Data ----------------
-
+    //Sample Data
     private void seedSampleData() {
         Book b1 = new Book("The Pragmatic Programmer", "Andrew Hunt", "9780135957059", "Technology",
                 "Addison-Wesley", 2019, 3, 45.99, "T-101", "A guide to becoming a better, more pragmatic developer.");
@@ -114,7 +110,7 @@ public class LibraryData implements Serializable {
         logActivity("System initialized with sample catalog data.");
     }
 
-    // ---------------- Book Operations ----------------
+    //Book Operations
 
     public List<Book> getBooks() {
         return books;
@@ -146,7 +142,7 @@ public class LibraryData implements Serializable {
         return books.stream().anyMatch(b -> b.getIsbn().equalsIgnoreCase(isbn) && !b.getId().equals(excludeId));
     }
 
-    // ---------------- Member Operations ----------------
+    //Member Operations
 
     public List<Member> getMembers() {
         return members;
@@ -170,7 +166,7 @@ public class LibraryData implements Serializable {
         return members.stream().filter(m -> m.getId().equals(id)).findFirst();
     }
 
-    // ---------------- Loan Operations ----------------
+    //Loan Operations
 
     public List<Loan> getLoans() {
         return loans;
@@ -196,9 +192,9 @@ public class LibraryData implements Serializable {
         return loans.stream().filter(l -> !l.isReturned() && l.isOverdue()).collect(Collectors.toList());
     }
 
-    /**
-     * Attempts to issue a book to a member, returns the result message and outcome.
-     */
+    
+    //Attempts to issue a book to a member, returns the result message and outcome.
+    
     public IssueResult issueBook(Book book, Member member) {
         if (!member.isActive()) {
             return new IssueResult(false, "This member's account is inactive.");
@@ -231,7 +227,7 @@ public class LibraryData implements Serializable {
         return new IssueResult(true, "Book issued successfully. Due on " + dueDate + ".");
     }
 
-    /** Processes the return of a loan, applying any overdue fine to the member. */
+    //Processes the return of a loan, applying any overdue fine to the member.
     public ReturnResult returnBook(Loan loan) {
         if (loan.isReturned()) {
             return new ReturnResult(false, "This loan has already been marked as returned.", 0);
@@ -254,7 +250,7 @@ public class LibraryData implements Serializable {
     public record ReturnResult(boolean success, String message, double fine) {
     }
 
-    // ---------------- Activity Log ----------------
+    //Activity Log
 
     public List<String> getActivityLog() {
         return activityLog;
@@ -270,7 +266,7 @@ public class LibraryData implements Serializable {
         }
     }
 
-    // ---------------- Statistics ----------------
+    //Statistics
 
     public int getTotalBookTitles() {
         return books.size();

@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
-/**
- * Represents a single book record in the library catalog.
- * Implements Serializable for persistence to disk.
+/* Represents a single book record in the library catalog.
+   Implements Serializable for persistence to disk.
  */
 public class Book implements Serializable, Comparable<Book> {
     private static final long serialVersionUID = 1L;
@@ -32,6 +31,7 @@ public class Book implements Serializable, Comparable<Book> {
 
     // Borrowing-related fields (for the currently active loan, simple model:
     // per-copy tracking handled by Loan objects)
+    @SuppressWarnings("FieldMayBeFinal")
     private LocalDate dateAdded;
 
     public Book(String title, String author, String isbn, String genre, String publisher,
@@ -53,7 +53,7 @@ public class Book implements Serializable, Comparable<Book> {
         this.dateAdded = LocalDate.now();
     }
 
-    // ---- Getters & Setters ----
+    //Getters & Setters 
     public String getId() {
         return id;
     }
