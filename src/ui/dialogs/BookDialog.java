@@ -35,8 +35,9 @@ public class BookDialog extends JDialog {
         getContentPane().setBackground(Theme.BG_PANEL);
         setLayout(new BorderLayout());
         setSize(560, 640);
+        setMinimumSize(new Dimension(480, 380));
         setLocationRelativeTo(owner);
-        setResizable(false);
+        setResizable(true);
 
         JPanel formPanel = new JPanel();
         formPanel.setBackground(Theme.BG_PANEL);
@@ -108,8 +109,16 @@ public class BookDialog extends JDialog {
         buttonPanel.add(cancelBtn);
         buttonPanel.add(saveBtn);
 
+        JScrollPane formScroll = new JScrollPane(formPanel);
+        formScroll.setBorder(null);
+        formScroll.getViewport().setBackground(Theme.BG_PANEL);
+        formScroll.setBackground(Theme.BG_PANEL);
+        formScroll.getVerticalScrollBar().setUnitIncrement(16);
+        formScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        formScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
         add(headerPanel, BorderLayout.NORTH);
-        add(formPanel, BorderLayout.CENTER);
+        add(formScroll, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
         getRootPane().setDefaultButton(saveBtn);

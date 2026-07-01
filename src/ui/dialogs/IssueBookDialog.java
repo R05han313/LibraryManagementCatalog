@@ -18,8 +18,9 @@ public class IssueBookDialog extends JDialog {
         getContentPane().setBackground(Theme.BG_PANEL);
         setLayout(new BorderLayout());
         setSize(440, 320);
+        setMinimumSize(new Dimension(380, 280));
         setLocationRelativeTo(owner);
-        setResizable(false);
+        setResizable(true);
 
         JPanel content = new JPanel();
         content.setBackground(Theme.BG_PANEL);
@@ -87,6 +88,7 @@ public class IssueBookDialog extends JDialog {
         content.add(Box.createVerticalStrut(6));
         content.add(memberBox);
         content.add(infoArea);
+        content.add(Box.createVerticalGlue());
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         buttonPanel.setBackground(Theme.BG_PANEL);
@@ -114,7 +116,15 @@ public class IssueBookDialog extends JDialog {
         buttonPanel.add(cancelBtn);
         buttonPanel.add(issueBtn);
 
-        add(content, BorderLayout.CENTER);
+        JScrollPane contentScroll = new JScrollPane(content);
+        contentScroll.setBorder(null);
+        contentScroll.getViewport().setBackground(Theme.BG_PANEL);
+        contentScroll.setBackground(Theme.BG_PANEL);
+        contentScroll.getVerticalScrollBar().setUnitIncrement(16);
+        contentScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        contentScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        add(contentScroll, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
     }
 

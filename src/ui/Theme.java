@@ -1,10 +1,10 @@
 package ui;
 
-import models.Book;
-import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.*;
+import javax.swing.border.*;
+import models.Book;
 
 /**
  * Centralized dark-theme styling constants and reusable UI component factories
@@ -23,9 +23,18 @@ public class Theme {
     public static final Color SUCCESS = new Color(0x4C, 0xD9, 0x7B);
     public static final Color WARNING = new Color(0xF5, 0xA6, 0x23);
     public static final Color DANGER = new Color(0xF0, 0x5C, 0x5C);
+    public static final Color TEAL = new Color(0x2D, 0xD4, 0xBF);
+    public static final Color PURPLE = new Color(0xA7, 0x8B, 0xFA);
+    public static final Color PINK = new Color(0xF2, 0x7E, 0xB0);
     public static final Color TEXT_PRIMARY = new Color(0xEC, 0xEE, 0xF3);
     public static final Color TEXT_MUTED = new Color(0x9A, 0x9F, 0xAE);
     public static final Color BORDER = new Color(0x33, 0x37, 0x44);
+
+    /**
+     * A varied but harmonious set of accents used to color-code charts and stat
+     * cards.
+     */
+    public static final Color[] CHART_PALETTE = { ACCENT, TEAL, WARNING, PURPLE, SUCCESS, PINK, DANGER, ACCENT_DIM };
 
     public static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 22);
     public static final Font FONT_HEADING = new Font("Segoe UI", Font.BOLD, 16);
@@ -156,6 +165,60 @@ public class Theme {
         border.setTitleColor(TEXT_MUTED);
         border.setTitleFont(FONT_SUBHEAD);
         return border;
+    }
+
+    /**
+     * Section border whose title and hairline pick up an accent color, for light
+     * color-coding.
+     */
+    public static TitledBorder sectionBorder(String title, Color accent) {
+        TitledBorder border = BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(tint(accent, 0.35f), 1), title);
+        border.setTitleColor(accent);
+        border.setTitleFont(FONT_SUBHEAD);
+        return border;
+    }
+
+    /**
+     * Returns a translucent version of a color, useful for soft badge backgrounds
+     * and tinted borders.
+     */
+    public static Color tint(Color c, float alpha) {
+        return new Color(c.getRed(), c.getGreen(), c.getBlue(), Math.round(alpha * 255));
+    }
+
+    /**
+     * A small circular badge with a soft-tinted accent background, used to
+     * color-code icons on cards.
+     */
+    public static JComponent iconBadge(String icon, Color accent) {
+        JPanel badge = new JPanel(new GridBagLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(tint(accent, 0.18f));
+                g2.fillOval(0, 0, getWidth(), getHeight());
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        badge.setOpaque(false);
+        badge.setPreferredSize(new Dimension(44, 44));
+        JLabel iconLabel = new JLabel(icon);
+        iconLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+        badge.add(iconLabel);
+        return badge;
+    }
+
+    /**
+     * A thin colored top stripe combined with normal card padding, for quick visual
+     * color-coding of cards.
+     */
+    public static Border topAccentBorder(Color accent) {
+        return new CompoundBorder(
+                new MatteBorder(3, 0, 0, 0, accent),
+                new EmptyBorder(13, 18, 16, 18));
     }
 
     /**
